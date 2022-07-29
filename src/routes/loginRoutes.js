@@ -1,8 +1,8 @@
 const { Router } = require('express');
+const loginController = require('../controllers/loginController');
+const validationLogin = require('../middlewares/loginValidate');
 
 const router = Router();
-const loginController = require('../controllers/loginController');
-const validationLogin = require('../middlewares/index');
 
 router.post('/', validationLogin, loginController.singIn);
 

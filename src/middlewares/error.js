@@ -1,4 +1,4 @@
-const CustomError = require('../helpers/customError');
+const EditError = require('../helpers/editError');
 
 class GlobalError {
   constructor(defaultStatus = 500) {
@@ -6,7 +6,7 @@ class GlobalError {
   }
 
   handle(error, _req, res, _next) {
-    if (error instanceof CustomError) {
+    if (error instanceof EditError) {
       return res.status(error.status).json({ message: error.message });
     }
     return res.status(this.defaultStatus).json({ message: error.message });
