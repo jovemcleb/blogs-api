@@ -1,6 +1,6 @@
 const { User } = require('../database/models');
 const EditError = require('../helpers/editError');
-const { CONFLICT } = require('../helpers/httpStatusCode');
+const { CONFLICT, NOT_FOUND } = require('../helpers/httpStatusCode');
 const { createToken } = require('../helpers/jwtToken');
 
 const createUser = async (infoUser) => {
@@ -21,4 +21,10 @@ const getAllUsers = async () => {
   return allUsers;
 };
 
-module.exports = { createUser, getAllUsers };
+const getUserById = async (id) => {
+  const user = await User.findOne({ where: { id }, attributes: { exclude: ['password'] } });
+  if (!user) throw new EditError(NOT_FOUND, 'User does not exist');
+  return user;
+};
+
+module.exports = { createUser, getAllUsers, getUserById };
