@@ -1,11 +1,15 @@
-const sequelize = require("sequelize");
+"use strict";
 
 const Category = (sequelize, DataTypes) => {
   const Category = sequelize.define('Category', {
-    id: {type: DataTypes.INTEGER, primaryKey: true},
+    id: { 
+      allowNull: false,
+      autoIncrement: true,
+      type: DataTypes.INTEGER, 
+      primaryKey: true},
     name: {type: DataTypes.STRING},
   }, {
-    tableName: 'Category',
+    tableName: 'Categories',
     timestamps: false,
   });
 
