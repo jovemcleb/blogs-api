@@ -1,4 +1,4 @@
-const { CREATED } = require('../helpers/httpStatusCode');
+const { CREATED, OK } = require('../helpers/httpStatusCode');
 const categoryService = require('../services/categoryService');
 
 const createCategory = async (req, res) => {
@@ -12,4 +12,9 @@ const createCategory = async (req, res) => {
   }
 };
 
-module.exports = { createCategory }; 
+const getAllCategories = async (req, res) => {
+  const allCategories = await categoryService.getAllCategories();
+  return res.status(OK).json(allCategories);
+};
+
+module.exports = { createCategory, getAllCategories }; 
