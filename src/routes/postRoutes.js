@@ -5,8 +5,6 @@ const newPostValidate = require('../middlewares/newPostValidation');
 
 const router = Router();
 
-router.use(tokenValidate);
-
-router.post('/', newPostValidate, postController.createNewPost);
+router.post('/', newPostValidate, tokenValidate, postController.createNewPost);
 
 module.exports = router;

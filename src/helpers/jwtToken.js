@@ -3,8 +3,9 @@ require('dotenv/config');
 
 const { JWT_SECRET } = process.env;
 
-const createToken = (email) => {
-  const token = sign(email, JWT_SECRET, {
+const createToken = (infoUser) => {
+  console.log(infoUser);
+  const token = sign(infoUser, JWT_SECRET, {
     expiresIn: '1d',
     algorithm: 'HS256',
   }); 

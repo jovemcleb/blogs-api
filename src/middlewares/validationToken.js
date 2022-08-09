@@ -9,7 +9,8 @@ const tokenValidate = (req, res, next) => {
   }
   
   try {
-    req.user = validateToken(authorization);
+    const { id } = validateToken(authorization);
+    req.user = id;
   } catch (error) {
     return res.status(UNAUTHORIZED).json({ message: 'Expired or invalid token' });
   }

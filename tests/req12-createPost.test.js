@@ -52,6 +52,7 @@ describe(requirements[11].description, () => {
       .expect('status', 201)
       .then(async (response) => {
         const { json } = response;
+        console.log(json, response);
         expect(json.id).toBe(3);
         expect(json.title).toBe('Fórmula 1');
         expect(json.content).toBe('O campeão do ano!');

@@ -5,7 +5,7 @@ const EditError = require('../helpers/editError');
 const { BAD_REQUEST } = require('../helpers/httpStatusCode');
 
 const validateCredentials = async ({ email, password }) => {
-  const user = await User.findOne({ where: { email } });
+  const user = await User.findOne({ where: { email }, raw: true });
 
   if (!user) throw new EditError(BAD_REQUEST, 'Invalid fields');
 
@@ -13,7 +13,7 @@ const validateCredentials = async ({ email, password }) => {
 
   if (!matchPassword) throw new EditError(BAD_REQUEST, 'Invalid password');
 
-  return jwtService.createToken({ email, password });
+  return jwtService.createToken({ id: user.id, email, password });
 };
 
 module.exports = { validateCredentials }; 

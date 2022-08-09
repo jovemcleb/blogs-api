@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
-const { BlogPost, Category, PostCategory, User } = require('../database/models');
+const { BlogPost, Category, PostCategory } = require('../database/models');
 const config = require('../database/config/config');
-const EditError = require('../helpers/editError');
+// const EditError = require('../helpers/editError');
 const { BAD_REQUEST } = require('../helpers/httpStatusCode');
 
 const sequelize = new Sequelize(config.development);
@@ -15,21 +15,23 @@ const customObject = (obj) => ({
   published: obj.published,
 });
 
-const createNewPost = async (title, content, categoryIds, { email }) => {
+const createNewPost = async (title, content, categoryIds, id) => {
   const t = await sequelize.transaction();
   try {
-    const { id } = await User.findOne({ where: { email } });
     const { count } = await Category.findAndCountAll({ where: { id: categoryIds } });
-    if (count !== categoryIds.length) throw new EditError(BAD_REQUEST, '"categoryIds" not found');
+  
+    if (count !== categoryIds.length || count === 0) {
+      return { error: true, status: BAD_REQUEST, message: '"categoryIds" not found' };
+    }
     const post = await BlogPost.create(
       { title, content, userId: id, published: new Date(), updated: new Date() },
       { transaction: t },
       );
-    await Promise.all(categoryIds.map(
+      await Promise.all(categoryIds.map(
         (item) => PostCategory.create({ postId: post.id, categoryId: item }, { transaction: t }),
-      ));
-    await t.commit();
-    // console.log(customObject(post));
+        ));
+
+        await t.commit();
     return customObject(post);
   } catch (e) {
     await t.rollback(); return e;

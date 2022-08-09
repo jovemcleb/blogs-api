@@ -10,9 +10,8 @@ const createUser = async (infoUser) => {
 
   if (mailUser) throw new EditError(CONFLICT, 'User already registered');
 
-  await User.create({ displayName, email, password, image });
-
-  const token = await createToken({ email, password });
+  const { dataValues: { id } } = await User.create({ displayName, email, password, image });
+  const token = await createToken({ id, email, password });
   return token;
 };
 
