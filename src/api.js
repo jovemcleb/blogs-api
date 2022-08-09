@@ -5,6 +5,7 @@ const globalError = require('./middlewares/error');
 const loginRouter = require('./routes/loginRoutes'); 
 const userRouter = require('./routes/userRoutes');
 const categoryRouter = require('./routes/categoryRoutes');
+const postRouter = require('./routes/postRoutes');
 
 // ...
 
@@ -15,7 +16,8 @@ app.use(express.json());
 app.use('/user', userRouter);
 app.use('/login', loginRouter);
 app.use('/categories', categoryRouter);
-app.use(globalError.handle);
+app.use('/post', postRouter);
+app.use((error, req, res, next) => globalError.handle(error, req, res, next));
 
 // ...
 

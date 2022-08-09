@@ -7,6 +7,7 @@ class GlobalError {
 
   handle(error, _req, res, _next) {
     if (error instanceof EditError) {
+      console.log(error);
       return res.status(error.status).json({ message: error.message });
     }
     return res.status(this.defaultStatus).json({ message: error.message });
