@@ -6,6 +6,7 @@ const newPostValidate = require('../middlewares/newPostValidation');
 const router = Router();
 
 router.post('/', newPostValidate, tokenValidate, postController.createNewPost);
+router.get('/:id', tokenValidate, postController.getPostById);
 router.get('/', tokenValidate, postController.getAllPosts);
 
 module.exports = router;
