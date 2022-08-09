@@ -1,4 +1,4 @@
-const { CREATED } = require('../helpers/httpStatusCode');
+const { CREATED, OK } = require('../helpers/httpStatusCode');
 const postService = require('../services/postService');
 
 const createNewPost = async (req, response) => {
@@ -12,4 +12,9 @@ const createNewPost = async (req, response) => {
   }
 };
 
-module.exports = { createNewPost };
+const getAllPosts = async (req, res) => {
+  const allPosts = await postService.getAllPosts();
+  return res.status(OK).json(allPosts);
+};
+
+module.exports = { createNewPost, getAllPosts };
