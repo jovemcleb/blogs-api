@@ -2,7 +2,7 @@ const Sequelize = require('sequelize');
 const { BlogPost, Category, PostCategory, User } = require('../database/models');
 const config = require('../database/config/config');
 const EditError = require('../helpers/editError');
-const { BAD_REQUEST } = require('../helpers/httpStatusCode');
+const { NOT_FOUND, BAD_REQUEST } = require('../helpers/httpStatusCode');
 
 const sequelize = new Sequelize(config.development);
 
@@ -58,14 +58,18 @@ const getAllPosts = async () => {
 };
 
 const getPostById = async (id) => {
+  console.log(id);
   const postById = await BlogPost.findOne(
     { 
       where: { id }, 
-      include: [{ model: User, as: 'user', attributes: { exclude: ['password'] } }], 
+      include: [
+        { model: User, as: 'user', attributes: { exclude: ['password'] } },
+        { model: Category, as: 'categories', through: { attributes: [] } },
+      ], 
     },
   );
 
-  if (!postById) throw new EditError(BAD_REQUEST, 'Post does not exist');
+  if (!postById) throw new EditError(NOT_FOUND, 'Post does not exist');
   
   return postById;
 };
