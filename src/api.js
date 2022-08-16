@@ -1,7 +1,7 @@
 require('express-async-errors');
 const express = require('express');
 const helmet = require('helmet');
-const globalError = require('./middlewares/error');
+const globalError = require('./helpers/errorGlobal');
 const loginRouter = require('./routes/loginRoutes'); 
 const userRouter = require('./routes/userRoutes');
 const categoryRouter = require('./routes/categoryRoutes');

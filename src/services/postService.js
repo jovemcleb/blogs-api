@@ -2,7 +2,7 @@ const Sequelize = require('sequelize');
 const { BlogPost, Category, PostCategory, User } = require('../database/models');
 const config = require('../database/config/config');
 const EditError = require('../helpers/editError');
-const { NOT_FOUND, BAD_REQUEST } = require('../helpers/httpStatusCode');
+const { NOT_FOUND, BAD_REQUEST, UNAUTHORIZED } = require('../helpers/httpStatusCode');
 
 const sequelize = new Sequelize(config.development);
 
@@ -74,4 +74,21 @@ const getPostById = async (id) => {
   return postById;
 };
 
-module.exports = { createNewPost, getAllPosts, getPostById };
+const updatePostById = async (idParam, contentUpdate, idUser) => {
+  const post = await BlogPost.findOne({ where: { id: idParam } });
+
+  const userIsValid = idUser === post.id;
+  if (!userIsValid) throw new EditError(UNAUTHORIZED, 'Unauthorized user');
+  await BlogPost.update({ ...contentUpdate, update: new Date() }, { where: { id: idParam } });
+  
+  const updatedPost = await BlogPost.findOne({ where: { id: idParam },
+    include: [
+      { model: User, as: 'user', attributes: { exclude: ['password'] } },
+      { model: Category, as: 'categories', through: { attributes: [] } },
+    ], 
+  }); 
+
+  return updatedPost;
+};
+
+module.exports = { createNewPost, getAllPosts, getPostById, updatePostById };

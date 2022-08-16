@@ -1,4 +1,4 @@
-const EditError = require('../helpers/editError');
+const EditError = require('./editError');
 
 class GlobalError {
   constructor(defaultStatus = 500) {
