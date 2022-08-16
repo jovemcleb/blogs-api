@@ -1,4 +1,4 @@
-const { CREATED, OK } = require('../helpers/httpStatusCode');
+const { CREATED, OK, NO_CONTENT } = require('../helpers/httpStatusCode');
 const postService = require('../services/postService');
 
 const createNewPost = async (req, response) => {
@@ -30,9 +30,16 @@ const updatePostById = async (req, res) => {
     const contentUpdate = req.body;
     const userId = req.user;
     const updatedPost = await postService.updatePostById(id, contentUpdate, userId);
-    return res.status(200).json(updatedPost);
+    return res.status(OK).json(updatedPost);
   } catch (error) {
     return res.status(error.status).json({ message: error.message });
   }
 };
-module.exports = { createNewPost, getAllPosts, getPostById, updatePostById };
+
+const deletePostById = async (req, res) => {
+  const { id } = req.params;
+  const idUser = req.user;
+  await postService.deletePostById(id, idUser);
+  return res.status(NO_CONTENT).end();
+};
+module.exports = { createNewPost, getAllPosts, getPostById, updatePostById, deletePostById };

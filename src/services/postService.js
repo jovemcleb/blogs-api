@@ -91,4 +91,18 @@ const updatePostById = async (idParam, contentUpdate, idUser) => {
   return updatedPost;
 };
 
-module.exports = { createNewPost, getAllPosts, getPostById, updatePostById };
+const deletePostById = async (idPost, idUser) => {
+  console.log(idPost, idUser);
+  const post = await BlogPost.findOne({ where: { id: idPost } });
+  
+  if (!post) throw new EditError(NOT_FOUND, 'Post does not exist');
+
+  const userIsValid = idUser === post.userId;
+
+  if (!userIsValid) throw new EditError(UNAUTHORIZED, 'Unauthorized user');
+  
+  await PostCategory.destroy({ where: { postId: idPost } });
+  await BlogPost.destroy({ where: { id: idPost } });
+};
+
+module.exports = { createNewPost, getAllPosts, getPostById, updatePostById, deletePostById };
