@@ -101,7 +101,6 @@ const deletePostById = async (idPost, idUser) => {
 
   if (!userIsValid) throw new EditError(UNAUTHORIZED, 'Unauthorized user');
   
-  await PostCategory.destroy({ where: { postId: idPost } });
   await BlogPost.destroy({ where: { id: idPost } });
 };
 
