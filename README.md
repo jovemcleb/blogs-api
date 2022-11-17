@@ -2,8 +2,6 @@
 
 ## 👨🏽‍💻 Desenvolvedor
 
-![Untitled](Blogs%20API%20616c339e9b18419a9990f7d1575065a0/Untitled.png)
-
 **Caleb Lima**
 
 Linkedin: [https://www.linkedin.com/in/caleb-lima/](https://www.linkedin.com/in/caleb-lima/)
@@ -42,7 +40,7 @@ Antes de começar, você vai precisar ter instalado em sua máquina as seguintes
 git clone git@github.com:jovemcleb/blogs-api.git
 ```
 
-1. Em seguida, entre no diretório e instale as dependências do projeto com:
+2. Em seguida, entre no diretório e instale as dependências do projeto com:
 
 ```bash
 npm install 
@@ -50,7 +48,7 @@ OU
 yarn install
 ```
 
-1. Crie um arquivo `.env` e preencha os seguintes campos:
+3. Crie um arquivo `.env` e preencha os seguintes campos:
 
 ```docker
 #### SERVER VARS
@@ -68,14 +66,14 @@ MYSQL_PASSWORD=
 JWT_SECRET=
 ```
 
-1. Na raiz do diretório do projeto rode o comando: 
+4. Na raiz do diretório do projeto rode o comando: 
 
 ```bash
 docker compose up
 
 ```
 
-1. Agora basta rodar o comando:
+5. Agora basta rodar o comando:
 
 ```bash
 npm start
