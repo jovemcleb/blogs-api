@@ -45,4 +45,4 @@ As seguintes ferramentas foram usadas na construção do projeto:
 - **[Joi](https://github.com/hapijs/joi)**
 - **[Jwt](https://jwt.io/)**
 
-> Veja o arquivo [package.json](https://github.com/serjofrancisco/ProjectTrybe-BlogsApi/blob/main/package.json)
+> Veja o arquivo [package.json](https://github.com/jovemcleb/blogs-api/blob/main/package.json)
